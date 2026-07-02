@@ -1,0 +1,37 @@
+# sdlc-factory configuration — the FSM engine reads this on every command.
+repo: OWNER/REPO
+connector: github
+
+# Per-gate approver allowlists (GitHub logins). Machine accounts are NEVER
+# honored at a gate, even if listed. The merge gate reuses the review allowlist.
+gates:
+  plan:
+    - tejaskatariya
+  review:
+    - tejaskatariya
+
+# Personas, not separate GitHub accounts: these logins are used as the issue
+# assignee while that persona's session runs (the claim lock). Defaults to
+# the user who installed the package; both may be the same login.
+bots:
+  dev: tejaskatariya
+  reviewer: tejaskatariya
+
+# Max stories advanced per autonomous pass (sdlc-factory run).
+concurrency: 1
+
+# Watchdog rule 1: heartbeat timeout per stage, hours.
+timeoutsHours:
+  plan: 1
+  implement: 4
+  review: 1
+  merge: 1
+
+# Watchdog rule 2: queued-with-open-deps age before the one-time ops flag, hours.
+starvationHours: 24
+
+logsDir: logs
+
+# Defined in the design but disabled by convention during the proving-ground
+# phase: every story gates through a human.
+fastTrack: false
