@@ -1,5 +1,5 @@
 # sdlc-factory configuration — the FSM engine reads this on every command.
-repo: OWNER/REPO
+repo: tejaskatariya/sdlc-playground
 connector: github
 
 # Per-gate approver allowlists (GitHub logins). Machine accounts are NEVER
