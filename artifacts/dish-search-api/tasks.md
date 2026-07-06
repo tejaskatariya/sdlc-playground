@@ -38,7 +38,7 @@
   400; malformed `page`/`page_size` → 400 (remap FastAPI 422); error body is
   `{"error": "<message>"}`. — *Accept: each invalid input case returns 400
   with a JSON error message.* (AC 7)
-- [ ] 8. Traceability sweep and app README: map every spec.md acceptance
+- [x] 8. Traceability sweep and app README: map every spec.md acceptance
   criterion to at least one named test (table in
   `apps/dish-search-api/README.md` with run instructions), fill any gaps,
   run the full suite. — *Accept: README table maps AC 1–8 to green tests;
