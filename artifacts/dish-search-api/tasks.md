@@ -9,7 +9,7 @@
   (fastapi, uvicorn, rapidfuzz; pytest + httpx dev), `src/dish_search/`
   package, `tests/` with a trivial smoke test. — *Accept: `pytest` runs and
   passes in the app dir.*
-- [ ] 2. Add `data/seed.json` (≥5 restaurants, ≥30 dishes, incl. "Paneer
+- [x] 2. Add `data/seed.json` (≥5 restaurants, ≥30 dishes, incl. "Paneer
   Tikka" and multi-word names for fuzzy tests) plus `models.py` and
   `catalog.py` loading it at startup; tests assert the fixture parses, every
   dish joins to a restaurant, and all AC #2 fields are present. — *Accept:
