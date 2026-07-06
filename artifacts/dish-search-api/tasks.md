@@ -24,7 +24,7 @@
   fuzzy-name (best score first) > description-only, ties broken by name then
   id. — *Accept: "panner tika" finds Paneer Tikka; exact match ranks above
   fuzzy for the same query.* (AC 3, 4)
-- [ ] 5. Add pagination to the search service: `page`/`page_size` slicing
+- [x] 5. Add pagination to the search service: `page`/`page_size` slicing
   with total count; pages are disjoint, size respected, out-of-range page
   yields an empty list, not an error. — *Accept: unit tests prove disjoint
   pages and empty out-of-range page.* (AC 5)

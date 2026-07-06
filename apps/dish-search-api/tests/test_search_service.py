@@ -187,3 +187,74 @@ class TestSearchOrdering:
 
         assert names == names2
         assert ids == ids2
+
+
+class TestPagination:
+    """Tests for pagination (Task 5, AC 5)."""
+
+    def test_paginate_returns_total_count(self, catalog):
+        """Paginated search returns total count of all matches."""
+        from dish_search.search import search_dishes_paginated
+
+        result = search_dishes_paginated(catalog, "paneer", page=1, page_size=2)
+        # Total should be all matching dishes, not just page size
+        assert result.total >= 2
+        assert len(result.results) <= 2
+
+    def test_paginate_respects_page_size(self, catalog):
+        """Page size is respected in results."""
+        from dish_search.search import search_dishes_paginated
+
+        result = search_dishes_paginated(catalog, "biryani", page=1, page_size=2)
+        assert len(result.results) <= 2
+
+    def test_paginate_pages_are_disjoint(self, catalog):
+        """Pages don't overlap - each item appears on exactly one page."""
+        from dish_search.search import search_dishes_paginated
+
+        # Get all biryani dishes across pages
+        page1 = search_dishes_paginated(catalog, "biryani", page=1, page_size=2)
+        page2 = search_dishes_paginated(catalog, "biryani", page=2, page_size=2)
+
+        page1_ids = {r.dish.id for r in page1.results}
+        page2_ids = {r.dish.id for r in page2.results}
+
+        # No overlap between pages
+        assert page1_ids.isdisjoint(page2_ids)
+
+    def test_paginate_out_of_range_returns_empty(self, catalog):
+        """Out-of-range page returns empty list, not error (AC 5)."""
+        from dish_search.search import search_dishes_paginated
+
+        result = search_dishes_paginated(catalog, "biryani", page=999, page_size=10)
+        assert result.results == []
+        # Total should still reflect all matches
+        assert result.total >= 1
+
+    def test_paginate_returns_page_metadata(self, catalog):
+        """Paginated result includes page and page_size metadata."""
+        from dish_search.search import search_dishes_paginated
+
+        result = search_dishes_paginated(catalog, "paneer", page=2, page_size=3)
+        assert result.page == 2
+        assert result.page_size == 3
+
+    def test_paginate_all_items_across_pages(self, catalog):
+        """All items can be retrieved across pages."""
+        from dish_search.search import search_dishes_paginated
+
+        # Get total first
+        result1 = search_dishes_paginated(catalog, "biryani", page=1, page_size=100)
+        total = result1.total
+
+        # Now get items page by page
+        all_ids = set()
+        page = 1
+        while True:
+            result = search_dishes_paginated(catalog, "biryani", page=page, page_size=2)
+            if not result.results:
+                break
+            all_ids.update(r.dish.id for r in result.results)
+            page += 1
+
+        assert len(all_ids) == total

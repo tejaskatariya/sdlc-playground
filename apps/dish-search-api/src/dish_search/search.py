@@ -7,7 +7,13 @@ from rapidfuzz import fuzz
 from rapidfuzz.distance import Levenshtein
 
 from .catalog import Catalog
-from .models import Dish, DishSummary, DishWithRestaurant, RestaurantSummary
+from .models import (
+    Dish,
+    DishSummary,
+    DishWithRestaurant,
+    PaginatedSearchResult,
+    RestaurantSummary,
+)
 
 
 class MatchType(IntEnum):
@@ -173,3 +179,40 @@ def search_dishes(catalog: Catalog, query: str) -> list[DishWithRestaurant]:
         results.append(result)
 
     return results
+
+
+def search_dishes_paginated(
+    catalog: Catalog,
+    query: str,
+    page: int = 1,
+    page_size: int = 20,
+) -> PaginatedSearchResult:
+    """Search dishes with pagination.
+
+    Args:
+        catalog: The catalog to search in.
+        query: The search query string.
+        page: Page number (1-indexed). Default 1.
+        page_size: Number of results per page. Default 20.
+
+    Returns:
+        PaginatedSearchResult with results, total count, and pagination metadata.
+        Out-of-range page returns empty results with correct total.
+    """
+    # Get all matching results
+    all_results = search_dishes(catalog, query)
+    total = len(all_results)
+
+    # Calculate slice indices (page is 1-indexed)
+    start_idx = (page - 1) * page_size
+    end_idx = start_idx + page_size
+
+    # Slice results for this page
+    page_results = all_results[start_idx:end_idx]
+
+    return PaginatedSearchResult(
+        results=page_results,
+        total=total,
+        page=page,
+        page_size=page_size,
+    )

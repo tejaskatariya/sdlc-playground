@@ -46,3 +46,12 @@ class DishWithRestaurant(BaseModel):
 
     dish: DishSummary
     restaurant: RestaurantSummary
+
+
+class PaginatedSearchResult(BaseModel):
+    """Paginated search result with metadata."""
+
+    results: list[DishWithRestaurant]
+    total: int
+    page: int
+    page_size: int
