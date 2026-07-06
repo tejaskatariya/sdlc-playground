@@ -19,7 +19,7 @@
   query over dish name and description, returning dish + restaurant
   summaries; no match returns an empty list. — *Accept: exact dish-name
   query returns all matching dishes; unknown query returns [].* (AC 2, 6)
-- [ ] 4. Add fuzzy matching and ordering with rapidfuzz: matches up to edit
+- [x] 4. Add fuzzy matching and ordering with rapidfuzz: matches up to edit
   distance 2 (whole name or name token), distance 3 excluded; order exact >
   fuzzy-name (best score first) > description-only, ties broken by name then
   id. — *Accept: "panner tika" finds Paneer Tikka; exact match ranks above
