@@ -5,7 +5,7 @@
 > All code lands in `apps/dish-search-api/`. Every task: write the failing
 > tests first, then implement.
 
-- [ ] 1. Scaffold the `apps/dish-search-api/` project: `pyproject.toml`
+- [x] 1. Scaffold the `apps/dish-search-api/` project: `pyproject.toml`
   (fastapi, uvicorn, rapidfuzz; pytest + httpx dev), `src/dish_search/`
   package, `tests/` with a trivial smoke test. — *Accept: `pytest` runs and
   passes in the app dir.*
