@@ -2,6 +2,9 @@
 repo: tejaskatariya/sdlc-playground
 connector: github
 
+# Where pipeline-generated implementation code lands (one subdir per app).
+generatedCodeDir: apps
+
 # Per-gate approver allowlists (GitHub logins). Machine accounts are NEVER
 # honored at a gate, even if listed. The merge gate reuses the review allowlist.
 gates:
