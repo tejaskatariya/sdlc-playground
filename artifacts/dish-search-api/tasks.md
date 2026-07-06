@@ -15,7 +15,7 @@
   dish joins to a restaurant, and all AC #2 fields are present. — *Accept:
   catalog loads seed and exposes dishes joined with restaurant summaries.*
   (AC 2, 8)
-- [ ] 3. Implement exact/substring search in `search.py`: case-insensitive
+- [x] 3. Implement exact/substring search in `search.py`: case-insensitive
   query over dish name and description, returning dish + restaurant
   summaries; no match returns an empty list. — *Accept: exact dish-name
   query returns all matching dishes; unknown query returns [].* (AC 2, 6)
