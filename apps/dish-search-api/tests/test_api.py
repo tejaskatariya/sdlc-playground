@@ -109,3 +109,128 @@ class TestSearchEndpoint:
         assert response.status_code == 200
         data = response.json()
         assert data["page_size"] == 100
+
+
+class TestInputValidation:
+    """Tests for input validation and error handling (Task 7, AC 7)."""
+
+    @pytest.mark.asyncio
+    async def test_missing_query_returns_400(self, client):
+        """Missing q parameter returns 400."""
+        response = await client.get("/v1/dishes/search")
+
+        assert response.status_code == 400
+        data = response.json()
+        assert "error" in data
+
+    @pytest.mark.asyncio
+    async def test_blank_query_returns_400(self, client):
+        """Blank q parameter returns 400."""
+        response = await client.get("/v1/dishes/search", params={"q": ""})
+
+        assert response.status_code == 400
+        data = response.json()
+        assert "error" in data
+
+    @pytest.mark.asyncio
+    async def test_whitespace_only_query_returns_400(self, client):
+        """Whitespace-only q parameter returns 400."""
+        response = await client.get("/v1/dishes/search", params={"q": "   "})
+
+        assert response.status_code == 400
+        data = response.json()
+        assert "error" in data
+
+    @pytest.mark.asyncio
+    async def test_single_char_query_returns_400(self, client):
+        """Single character q parameter returns 400 (min 2 chars)."""
+        response = await client.get("/v1/dishes/search", params={"q": "a"})
+
+        assert response.status_code == 400
+        data = response.json()
+        assert "error" in data
+
+    @pytest.mark.asyncio
+    async def test_two_char_query_is_valid(self, client):
+        """Two character query is valid (min 2 chars)."""
+        response = await client.get("/v1/dishes/search", params={"q": "ab"})
+
+        # Should return 200 (may have empty results, but valid request)
+        assert response.status_code == 200
+
+    @pytest.mark.asyncio
+    async def test_invalid_page_type_returns_400(self, client):
+        """Non-integer page returns 400 (remapped from 422)."""
+        response = await client.get(
+            "/v1/dishes/search", params={"q": "paneer", "page": "abc"}
+        )
+
+        assert response.status_code == 400
+        data = response.json()
+        assert "error" in data
+
+    @pytest.mark.asyncio
+    async def test_page_zero_returns_400(self, client):
+        """Page 0 returns 400 (must be >= 1)."""
+        response = await client.get(
+            "/v1/dishes/search", params={"q": "paneer", "page": 0}
+        )
+
+        assert response.status_code == 400
+        data = response.json()
+        assert "error" in data
+
+    @pytest.mark.asyncio
+    async def test_negative_page_returns_400(self, client):
+        """Negative page returns 400."""
+        response = await client.get(
+            "/v1/dishes/search", params={"q": "paneer", "page": -1}
+        )
+
+        assert response.status_code == 400
+        data = response.json()
+        assert "error" in data
+
+    @pytest.mark.asyncio
+    async def test_invalid_page_size_type_returns_400(self, client):
+        """Non-integer page_size returns 400 (remapped from 422)."""
+        response = await client.get(
+            "/v1/dishes/search", params={"q": "paneer", "page_size": "xyz"}
+        )
+
+        assert response.status_code == 400
+        data = response.json()
+        assert "error" in data
+
+    @pytest.mark.asyncio
+    async def test_page_size_zero_returns_400(self, client):
+        """Page size 0 returns 400 (must be >= 1)."""
+        response = await client.get(
+            "/v1/dishes/search", params={"q": "paneer", "page_size": 0}
+        )
+
+        assert response.status_code == 400
+        data = response.json()
+        assert "error" in data
+
+    @pytest.mark.asyncio
+    async def test_page_size_over_100_returns_400(self, client):
+        """Page size > 100 returns 400 (max 100)."""
+        response = await client.get(
+            "/v1/dishes/search", params={"q": "paneer", "page_size": 101}
+        )
+
+        assert response.status_code == 400
+        data = response.json()
+        assert "error" in data
+
+    @pytest.mark.asyncio
+    async def test_error_response_shape(self, client):
+        """Error responses have {"error": "<message>"} shape."""
+        response = await client.get("/v1/dishes/search", params={"q": "a"})
+
+        assert response.status_code == 400
+        data = response.json()
+        assert "error" in data
+        assert isinstance(data["error"], str)
+        assert len(data["error"]) > 0

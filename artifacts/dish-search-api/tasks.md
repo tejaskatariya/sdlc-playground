@@ -34,7 +34,7 @@
   matches return 200 with `total: 0`. — *Accept: httpx TestClient sees
   correct shape, field names, and empty-result behavior over HTTP.*
   (AC 1, 2, 6)
-- [ ] 7. Input validation and error handling: missing/blank/1-char `q` →
+- [x] 7. Input validation and error handling: missing/blank/1-char `q` →
   400; malformed `page`/`page_size` → 400 (remap FastAPI 422); error body is
   `{"error": "<message>"}`. — *Accept: each invalid input case returns 400
   with a JSON error message.* (AC 7)
