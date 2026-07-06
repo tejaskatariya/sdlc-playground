@@ -28,7 +28,7 @@
   with total count; pages are disjoint, size respected, out-of-range page
   yields an empty list, not an error. — *Accept: unit tests prove disjoint
   pages and empty out-of-range page.* (AC 5)
-- [ ] 6. Wire `GET /v1/dishes/search` in `main.py`: query params `q`, `page`
+- [x] 6. Wire `GET /v1/dishes/search` in `main.py`: query params `q`, `page`
   (default 1), `page_size` (default 20, max 100); 200 JSON
   `{results, total, page, page_size}` with the full result shape; empty
   matches return 200 with `total: 0`. — *Accept: httpx TestClient sees
