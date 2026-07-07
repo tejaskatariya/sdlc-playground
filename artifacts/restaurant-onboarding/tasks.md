@@ -18,7 +18,7 @@ Each task is one commit, test-first.
   `RestaurantNotFound`), `GetRestaurant`, `ListRestaurants` with optional
   status filter — repository mocked at the port boundary only.
   *Accept: use-case unit tests pass with Mockito-mocked port.* (AC1, AC4, AC6)
-- [ ] **Task 4 — Persistence adapter.** Flyway `V1__create_restaurants.sql`,
+- [x] **Task 4 — Persistence adapter.** Flyway `V1__create_restaurants.sql`,
   `RestaurantJpaEntity` with `@Version`, entity↔domain mapper, Spring Data
   repository implementing the port. Integration-test save/find/list/version
   against Testcontainers Postgres with `ddl-auto: validate`.
