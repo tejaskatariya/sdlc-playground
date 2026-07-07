@@ -8,7 +8,7 @@ Each task is one commit, test-first.
   toolchain, Spring Boot 3.x (web, data-jpa, validation), Flyway, Postgres
   driver, and test deps (JUnit 5, AssertJ, Mockito, Testcontainers), plus a
   trivial placeholder unit test. *Accept: `./gradlew build` is green.*
-- [ ] **Task 2 — Domain model (TDD).** `Restaurant` record with
+- [x] **Task 2 — Domain model (TDD).** `Restaurant` record with
   domain-generated UUID, `RestaurantStatus` (`CREATED`, `ACTIVE`),
   `activate()` transition, `InvalidStateTransition` on double-activation,
   `RestaurantNotFound` exception type. Pure Java — no framework imports.
