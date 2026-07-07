@@ -23,7 +23,7 @@ Each task is one commit, test-first.
   repository implementing the port. Integration-test save/find/list/version
   against Testcontainers Postgres with `ddl-auto: validate`.
   *Accept: adapter integration tests green against real Postgres.* (AC7)
-- [ ] **Task 5 — Web adapter (TDD via `@WebMvcTest`).** REST controller for
+- [x] **Task 5 — Web adapter (TDD via `@WebMvcTest`).** REST controller for
   all four endpoints, request/response DTOs, Bean Validation (blank name,
   malformed email, empty cuisines), and ProblemDetail mapping: 400
   validation with field details, 404 not-found, 409 invalid transition,
