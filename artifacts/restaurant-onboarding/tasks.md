@@ -29,7 +29,7 @@ Each task is one commit, test-first.
   validation with field details, 404 not-found, 409 invalid transition,
   400 invalid status filter value.
   *Accept: web slice tests cover every documented status code.* (AC1, AC2, AC4, AC5, AC6)
-- [ ] **Task 6 — End-to-end integration tests.** `@SpringBootTest` +
+- [x] **Task 6 — End-to-end integration tests.** `@SpringBootTest` +
   Testcontainers: register → 201 + Location; invalid payload → 400 and
   nothing persisted; activate → 200 durable; double-activate → 409 (including
   optimistic-lock race); get/list with status filter; restart-survival via
