@@ -13,7 +13,7 @@ Each task is one commit, test-first.
   `activate()` transition, `InvalidStateTransition` on double-activation,
   `RestaurantNotFound` exception type. Pure Java — no framework imports.
   *Accept: domain unit tests pass without a Spring context.* (AC3, AC4)
-- [ ] **Task 3 — Application layer (TDD).** `RestaurantRepository` port and
+- [x] **Task 3 — Application layer (TDD).** `RestaurantRepository` port and
   use-case services: `RegisterRestaurant`, `ActivateRestaurant` (unknown id →
   `RestaurantNotFound`), `GetRestaurant`, `ListRestaurants` with optional
   status filter — repository mocked at the port boundary only.
