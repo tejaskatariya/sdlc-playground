@@ -3,7 +3,7 @@
 Implementation lands under `apps/restaurant-onboarding/` per the tech spec.
 Each task is one commit, test-first.
 
-- [ ] **Task 1 — Scaffold the Gradle project.** Create
+- [x] **Task 1 — Scaffold the Gradle project.** Create
   `apps/restaurant-onboarding` with Gradle wrapper + Kotlin DSL, Java 21
   toolchain, Spring Boot 3.x (web, data-jpa, validation), Flyway, Postgres
   driver, and test deps (JUnit 5, AssertJ, Mockito, Testcontainers), plus a
