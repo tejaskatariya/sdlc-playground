@@ -35,7 +35,7 @@ Each task is one commit, test-first.
   optimistic-lock race); get/list with status filter; restart-survival via
   fresh application context against the same container.
   *Accept: every AC demonstrated end-to-end.* (AC1–AC7)
-- [ ] **Task 7 — Traceability README.** `apps/restaurant-onboarding/README.md`
+- [x] **Task 7 — Traceability README.** `apps/restaurant-onboarding/README.md`
   with run instructions (local Postgres via Docker), API summary, and
   AC-to-test mapping table.
   *Accept: every AC maps to at least one named test.*
