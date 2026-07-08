@@ -1,8 +1,11 @@
 package com.zomatoclone.onboarding.adapters.in.web;
 
 import com.zomatoclone.onboarding.application.GetRestaurant;
+import com.zomatoclone.onboarding.application.ListRestaurants;
 import com.zomatoclone.onboarding.application.OnboardRestaurant;
 import com.zomatoclone.onboarding.domain.Restaurant;
+import com.zomatoclone.onboarding.domain.RestaurantRepository;
+import com.zomatoclone.shared.web.PageResponse;
 import java.net.URI;
 import java.util.UUID;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -19,10 +23,15 @@ public class RestaurantController {
 
   private final OnboardRestaurant onboardRestaurant;
   private final GetRestaurant getRestaurant;
+  private final ListRestaurants listRestaurants;
 
-  public RestaurantController(OnboardRestaurant onboardRestaurant, GetRestaurant getRestaurant) {
+  public RestaurantController(
+      OnboardRestaurant onboardRestaurant,
+      GetRestaurant getRestaurant,
+      ListRestaurants listRestaurants) {
     this.onboardRestaurant = onboardRestaurant;
     this.getRestaurant = getRestaurant;
+    this.listRestaurants = listRestaurants;
   }
 
   @PostMapping
@@ -51,5 +60,12 @@ public class RestaurantController {
   public RestaurantResponse getById(@PathVariable UUID id) {
     Restaurant restaurant = getRestaurant.execute(id);
     return RestaurantResponse.from(restaurant);
+  }
+
+  @GetMapping
+  public PageResponse<RestaurantResponse> list(
+      @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
+    RestaurantRepository.Page<Restaurant> result = listRestaurants.execute(page, size);
+    return PageResponse.from(result, RestaurantResponse::from);
   }
 }
