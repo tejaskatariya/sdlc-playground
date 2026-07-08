@@ -1,9 +1,13 @@
 package com.zomatoclone.onboarding.adapters.in.web;
 
+import com.zomatoclone.onboarding.application.GetRestaurant;
 import com.zomatoclone.onboarding.application.OnboardRestaurant;
 import com.zomatoclone.onboarding.domain.Restaurant;
 import java.net.URI;
+import java.util.UUID;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,9 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class RestaurantController {
 
   private final OnboardRestaurant onboardRestaurant;
+  private final GetRestaurant getRestaurant;
 
-  public RestaurantController(OnboardRestaurant onboardRestaurant) {
+  public RestaurantController(OnboardRestaurant onboardRestaurant, GetRestaurant getRestaurant) {
     this.onboardRestaurant = onboardRestaurant;
+    this.getRestaurant = getRestaurant;
   }
 
   @PostMapping
@@ -39,5 +45,11 @@ public class RestaurantController {
 
     return ResponseEntity.created(URI.create("/api/restaurants/" + restaurant.id()))
         .body(RestaurantResponse.from(restaurant));
+  }
+
+  @GetMapping("/{id}")
+  public RestaurantResponse getById(@PathVariable UUID id) {
+    Restaurant restaurant = getRestaurant.execute(id);
+    return RestaurantResponse.from(restaurant);
   }
 }
