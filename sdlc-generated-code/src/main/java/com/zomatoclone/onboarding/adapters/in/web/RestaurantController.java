@@ -1,5 +1,6 @@
 package com.zomatoclone.onboarding.adapters.in.web;
 
+import com.zomatoclone.onboarding.application.DelistRestaurant;
 import com.zomatoclone.onboarding.application.GetRestaurant;
 import com.zomatoclone.onboarding.application.ListRestaurants;
 import com.zomatoclone.onboarding.application.OnboardRestaurant;
@@ -10,6 +11,7 @@ import com.zomatoclone.shared.web.PageResponse;
 import java.net.URI;
 import java.util.UUID;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,16 +29,19 @@ public class RestaurantController {
   private final GetRestaurant getRestaurant;
   private final ListRestaurants listRestaurants;
   private final UpdateRestaurant updateRestaurant;
+  private final DelistRestaurant delistRestaurant;
 
   public RestaurantController(
       OnboardRestaurant onboardRestaurant,
       GetRestaurant getRestaurant,
       ListRestaurants listRestaurants,
-      UpdateRestaurant updateRestaurant) {
+      UpdateRestaurant updateRestaurant,
+      DelistRestaurant delistRestaurant) {
     this.onboardRestaurant = onboardRestaurant;
     this.getRestaurant = getRestaurant;
     this.listRestaurants = listRestaurants;
     this.updateRestaurant = updateRestaurant;
+    this.delistRestaurant = delistRestaurant;
   }
 
   @PostMapping
@@ -93,5 +98,11 @@ public class RestaurantController {
 
     Restaurant restaurant = updateRestaurant.execute(id, command);
     return RestaurantResponse.from(restaurant);
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> delete(@PathVariable UUID id) {
+    delistRestaurant.execute(id);
+    return ResponseEntity.noContent().build();
   }
 }
